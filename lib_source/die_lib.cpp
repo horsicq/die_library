@@ -64,6 +64,8 @@ int DIE_lib::createHandle()
     {
         nCurrentHandle++;
     }
+    
+    nResult=nCurrentHandle;
 
     mapHandles.insert(nCurrentHandle,0);
 
