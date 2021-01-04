@@ -1,6 +1,6 @@
 set VS_PATH="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community"
 set SEVENZIP_PATH="C:\Program Files\7-Zip"
-set QT_PATH=C:\Qt\5.15.2\msvc2019
+set QT_PATH=C:\Qt\5.15.2\msvc2019_64
 
 set BUILD_NAME=die_lib_win64
 set SOURCE_PATH=%~dp0
