@@ -1,4 +1,4 @@
-// copyright (c) 2019-2020 hors<horsicq@gmail.com>
+// copyright (c) 2019-2021 hors<horsicq@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,22 +24,22 @@
 extern "C" {
 #endif
 
-LIB_SOURCE_EXPORT int NFD_CreateScanHandle()
+LIB_SOURCE_EXPORT int DIE_CreateScanHandle()
 {  
     return DIE_lib().createHandle();
 }
 
-LIB_SOURCE_EXPORT char *NFD_ScanFileA(int nHandle, char *pszFileName, unsigned int nFlags)
+LIB_SOURCE_EXPORT char *DIE_ScanFileA(int nHandle, char *pszFileName, unsigned int nFlags)
 {
     return DIE_lib().scanFileA(nHandle,pszFileName,nFlags);
 }
 
-LIB_SOURCE_EXPORT wchar_t *NFD_ScanFileW(int nHandle, wchar_t *pwszFileName, unsigned int nFlags)
+LIB_SOURCE_EXPORT wchar_t *DIE_ScanFileW(int nHandle, wchar_t *pwszFileName, unsigned int nFlags)
 {
     return DIE_lib().scanFileW(nHandle,pwszFileName,nFlags);
 }
 
-LIB_SOURCE_EXPORT bool NFD_CloseScanHandle(int nHandle)
+LIB_SOURCE_EXPORT bool DIE_CloseScanHandle(int nHandle)
 {
     return DIE_lib().closeHandle(nHandle);
 }
@@ -152,7 +152,7 @@ QString DIE_lib::_scanFile(QString sFileName, quint32 nFlags)
 
     DiE_Script dieScript;
 
-    dieScript.loadDatabase("$app/db.zip"); // TODO Check
+    dieScript.loadDatabase("$app/db"); // TODO Check
 
     DiE_Script::SCAN_RESULT scanResult=dieScript.scanFile(sFileName,&options);
 
