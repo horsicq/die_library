@@ -2,7 +2,7 @@ set VS_PATH="C:\Program Files (x86)\Microsoft Visual Studio 12.0"
 set SEVENZIP_PATH="C:\Program Files\7-Zip"
 set QT_PATH="C:\Qt5.6.3\5.6.3\msvc2013"
 
-set BUILD_NAME=die_lib_win32
+set BUILD_NAME=die_lib_winxp
 set SOURCE_PATH=%~dp0
 mkdir %SOURCE_PATH%\release
 set /p RELEASE_VERSION=<%SOURCE_PATH%\release_version.txt
