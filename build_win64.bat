@@ -23,7 +23,7 @@ del Makefile.Debug
 cd ..
 
 cd lib_source
-%QT_PATH%\bin\qmake.exe lib_source.pro -r -spec win32-msvc2013 "CONFIG+=release"
+%QT_PATH%\bin\qmake.exe lib_source.pro -r -spec win32-msvc "CONFIG+=release"
 
 nmake Makefile.Release clean
 nmake
