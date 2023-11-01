@@ -10,3 +10,15 @@
 [submodule "Detect-It-Easy"]
 	path = Detect-It-Easy
 	url = https://github.com/horsicq/Detect-It-Easy.git
+[submodule "build_tools"]
+	path = build_tools
+	url = https://github.com/horsicq/build_tools
+[submodule "XCapstone"]
+	path = XCapstone
+	url = https://github.com/horsicq/XCapstone
+[submodule "XDEX"]
+	path = XDEX
+	url = https://github.com/horsicq/XDEX
+[submodule "XPDF"]
+	path = XPDF
+	url = https://github.com/horsicq/XPDF
