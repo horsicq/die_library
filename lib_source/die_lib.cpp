@@ -1,47 +1,55 @@
-// copyright (c) 2019-2023 hors<horsicq@gmail.com>
-//
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
-
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-// SOFTWARE.
-//
+/* Copyright (c) 2019-2023 hors<horsicq@gmail.com>
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 #include "die_lib.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-LIB_SOURCE_EXPORT int DIE_CreateScanHandle()
-{  
-    return DIE_lib().createHandle();
+namespace QCoreAppDLL
+{
+    static int argc = 1;
+    static char arg0[] = "die.cpp";
+    static char * argv[] = { arg0, nullptr };
+    static QCoreApplication * pApp = nullptr;
 }
 
-LIB_SOURCE_EXPORT char *DIE_ScanFileA(int nHandle, char *pszFileName, unsigned int nFlags)
+LIB_SOURCE_EXPORT char *DIE_ScanFileA(char *pszFileName, unsigned int nFlags, char *pszDatabase)
 {
-    return DIE_lib().scanFileA(nHandle,pszFileName,nFlags);
+    return DIE_lib().scanFileA(pszFileName, nFlags, pszDatabase);
 }
 
-LIB_SOURCE_EXPORT wchar_t *DIE_ScanFileW(int nHandle, wchar_t *pwszFileName, unsigned int nFlags)
+LIB_SOURCE_EXPORT wchar_t *DIE_ScanFileW(wchar_t *pwszFileName, unsigned int nFlags, wchar_t *pwszDatabase)
 {
-    return DIE_lib().scanFileW(nHandle,pwszFileName,nFlags);
+    return DIE_lib().scanFileW(pwszFileName, nFlags, pwszDatabase);
 }
 
-LIB_SOURCE_EXPORT bool DIE_CloseScanHandle(int nHandle)
+LIB_SOURCE_EXPORT void DIE_FreeMemoryA(char *pszString)
 {
-    return DIE_lib().closeHandle(nHandle);
+    DIE_lib().freeMemoryA(pszString);
+}
+
+LIB_SOURCE_EXPORT void DIE_FreeMemoryW(char *pwszString)
+{
+    DIE_lib().freeMemoryA(pwszString);
 }
 
 #ifdef __cplusplus
@@ -50,124 +58,119 @@ LIB_SOURCE_EXPORT bool DIE_CloseScanHandle(int nHandle)
 
 DIE_lib::DIE_lib()
 {
-
+    QCoreAppDLL::pApp = new QCoreApplication(QCoreAppDLL::argc, QCoreAppDLL::argv);
+//    QCoreAppDLL::pApp->exec();
 }
 
-quint64 DIE_lib::nCurrentHandle=1;
-QMap<quint64,char *> DIE_lib::mapHandles={};
-
-int DIE_lib::createHandle()
+DIE_lib::~DIE_lib()
 {
-    int nResult=0;
-
-    while(mapHandles.contains(nCurrentHandle))
-    {
-        nCurrentHandle++;
-    }
-    
-    nResult=nCurrentHandle;
-
-    mapHandles.insert(nCurrentHandle,0);
-
-    nCurrentHandle++;
-
-    if(nCurrentHandle==0)
-    {
-        nCurrentHandle++;
-    }
-
-    return nResult;
+    if (QCoreAppDLL::pApp)
+        delete qApp;
 }
 
-char *DIE_lib::scanFileA(int nHandle, char *pszFileName, unsigned int nFlags)
+char *DIE_lib::scanFileA(char *pszFileName, unsigned int nFlags, char *pszDatabase)
 {
-    QString sResult=_scanFile(pszFileName,nFlags);
+    QString sResult=_scanFile(pszFileName,nFlags,pszDatabase);
 
-    int nSize=sResult.size()+1;
+    QByteArray baResult = sResult.toUtf8();
 
-    char *pMemory=new char[nSize];
+    char *pMemory=new char[baResult.size() + 1];
 
-    XBinary::_copyMemory(pMemory,sResult.toLatin1().data(),nSize);
-
-    closeHandle(nHandle);
-
-    getMapHandles()->insert(nHandle,pMemory);
+    XBinary::_copyMemory(pMemory,baResult.data(),baResult.size());
+    pMemory[baResult.size()] = 0;
 
     return pMemory;
 }
 
-wchar_t *DIE_lib::scanFileW(int nHandle, wchar_t *pwszFileName, unsigned int nFlags)
+wchar_t *DIE_lib::scanFileW(wchar_t *pwszFileName, unsigned int nFlags, wchar_t *pwszDatabase)
 {
-    QString sResult=_scanFile(QString::fromWCharArray(pwszFileName,-1),nFlags);
+    QString sResult=_scanFile(QString::fromWCharArray(pwszFileName,-1),nFlags,QString::fromWCharArray(pwszDatabase,-1));
 
-    int nSize=(sResult.size()+1)*2;
+    wchar_t *pMemory=new wchar_t[sResult.size()+1];
 
-    char *pMemory=new char[nSize];
+    sResult.toWCharArray(pMemory);
 
-    sResult.toWCharArray((wchar_t *)pMemory);
-
-    closeHandle(nHandle);
-
-    getMapHandles()->insert(nHandle,pMemory);
-
-    return (wchar_t *)pMemory;
+    return pMemory;
 }
 
-bool DIE_lib::closeHandle(int nHandle)
+void DIE_lib::freeMemoryA(char *pszString)
 {
-    bool bResult=false;
-
-    if(mapHandles.contains(nHandle))
-    {
-        char *pMemory=mapHandles.value(nHandle);
-
-        mapHandles.remove(nHandle);
-
-        if(pMemory)
-        {
-            delete [] pMemory;
-        }
-
-        bResult=true;
-    }
-
-    return bResult;
+    delete [] pszString;
 }
 
-QMap<quint64, char *> *DIE_lib::getMapHandles()
+void DIE_lib::freeMemoryW(wchar_t *pwszString)
 {
-    return &(mapHandles);
+    delete [] pwszString;
 }
 
-QString DIE_lib::_scanFile(QString sFileName, quint32 nFlags)
+QString DIE_lib::_scanFile(QString sFileName, quint32 nFlags, QString sDatabase)
 {
     QString sResult;
 
-    DiE_Script::SCAN_OPTIONS options={};
+    DiE_Script::OPTIONS options={};
 
-    if(nFlags&SF_DEEPSCAN)
-    {
-        options.bDeepScan=true;
+    options.bShowType = true;
+    options.bShowVersion = true;
+    options.bShowOptions = true;
+
+    if(nFlags&SF_DEEPSCAN) {
+        options.bIsDeepScan=true;
+    }
+
+    if(nFlags&SF_HEURISTICSCAN) {
+        options.bIsHeuristicScan=true;
+    }
+
+    if(nFlags&SF_VERBOSE) {
+        options.bIsVerbose=true;
+    }
+
+    if(nFlags&SF_ALLTYPESSCAN) {
+        options.bAllTypesScan=true;
+    }
+
+    if(nFlags&SF_RECURSIVESCAN) {
+        options.bIsRecursiveScan=true;
+    }
+
+    if(nFlags&SF_RESULTASJSON) {
+        options.bResultAsJSON=true;
+    }
+
+    if(nFlags&SF_RESULTASXML) {
+        options.bResultAsXML=true;
+    }
+
+    if(nFlags&SF_RESULTASTSV) {
+        options.bResultAsTSV=true;
+    }
+
+    if(nFlags&SF_RESULTASCSV) {
+        options.bResultAsCSV=true;
     }
 
     DiE_Script dieScript;
 
-    dieScript.loadDatabase("$app/db"); // TODO Check
+    if (sDatabase == "") {
+        sDatabase = "$app/db";
+    }
 
-    DiE_Script::SCAN_RESULT scanResult=dieScript.scanFile(sFileName,&options);
+    dieScript.loadDatabase(sDatabase, true); // TODO Check
 
-    if(nFlags&SF_RESULTASJSON)
-    {
-        sResult=DiE_Script::scanResultToJsonString(&scanResult);
-    }
-    else if(nFlags&SF_RESULTASXML)
-    {
-        sResult=DiE_Script::scanResultToXmlString(&scanResult);
-    }
-    else
-    {
-        sResult=DiE_Script::scanResultToPlainString(&scanResult);
-    }
+    DiE_Script::SCAN_RESULT scanResult=dieScript.scanFile(sFileName, &options);
+
+    QList<XBinary::SCANSTRUCT> listResult = DiE_Script::convert(&(scanResult.listRecords));
+
+    ScanItemModel model(&listResult);
+
+    XBinary::FORMATTYPE formatType = XBinary::FORMATTYPE_TEXT;
+
+    if (options.bResultAsCSV) formatType = XBinary::FORMATTYPE_CSV;
+    else if (options.bResultAsJSON) formatType = XBinary::FORMATTYPE_JSON;
+    else if (options.bResultAsTSV) formatType = XBinary::FORMATTYPE_TSV;
+    else if (options.bResultAsXML) formatType = XBinary::FORMATTYPE_XML;
+
+    sResult = model.toString(formatType);
 
     return sResult;
 }

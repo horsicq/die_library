@@ -14,6 +14,7 @@ SOURCES += \
     die_lib.cpp
 
 HEADERS += \
+    ../include/die.h \
     die_lib.h
 
 include(../build.pri)
