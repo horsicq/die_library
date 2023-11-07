@@ -22,6 +22,10 @@
 #define DIE_LIB_H
 
 #include "die_script.h"
+#ifdef Q_OS_WIN32
+#include <windows.h>
+#include <comutil.h>
+#endif
 
 #if defined(LIB_SOURCE_LIBRARY)
 #  define LIB_SOURCE_EXPORT Q_DECL_EXPORT
@@ -52,6 +56,9 @@ public:
     wchar_t *scanFileW(wchar_t *pwszFileName,unsigned int nFlags, wchar_t *pwszDatabase);
     void freeMemoryA(char *pszString);
     void freeMemoryW(wchar_t *pwszString);
+#ifdef Q_OS_WIN32
+    int VB_ScanFile(wchar_t *pwszFileName, unsigned int nFlags, wchar_t *pwszDatabase, wchar_t *pwszBuffer, int nBufferSize);
+#endif
 
 private:
     QString _scanFile(QString sFileName,quint32 nFlags, QString sDatabase);

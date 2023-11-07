@@ -23,3 +23,7 @@ include(../build.pri)
     XCONFIG += die_script
     include(../die_script/die_script.pri)
 }
+
+win32{
+    LIBS += comsuppwd.lib
+}

@@ -22,6 +22,7 @@ char *DIE_ScanFileA(char *pszFileName, unsigned int nFlags, char *pszDatabase);
 wchar_t *DIE_ScanFileW(wchar_t *pwszFileName, unsigned int nFlags, wchar_t *pwszDatabase);
 void DIE_FreeMemoryA(char *pszString);
 void DIE_FreeMemoryW(char *pwszString);
+BSTR DIE_VB_ScanFile(wchar_t *pwszFileName, unsigned int nFlags, wchar_t *pwszDatabase);
 
 #ifdef UNICODE
 #define DIE_ScanFile DIE_ScanFileW

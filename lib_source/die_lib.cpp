@@ -51,6 +51,12 @@ LIB_SOURCE_EXPORT void DIE_FreeMemoryW(char *pwszString)
 {
     DIE_lib().freeMemoryA(pwszString);
 }
+#ifdef Q_OS_WIN32
+LIB_SOURCE_EXPORT int DIE_VB_ScanFile(wchar_t *pwszFileName, unsigned int nFlags, wchar_t *pwszDatabase, wchar_t *pwszBuffer, int nBufferSize)
+{
+    return DIE_lib().VB_ScanFile(pwszFileName, nFlags, pwszDatabase, pwszBuffer, nBufferSize);
+}
+#endif
 
 #ifdef __cplusplus
 }
@@ -86,7 +92,7 @@ wchar_t *DIE_lib::scanFileW(wchar_t *pwszFileName, unsigned int nFlags, wchar_t 
 {
     QString sResult=_scanFile(QString::fromWCharArray(pwszFileName,-1),nFlags,QString::fromWCharArray(pwszDatabase,-1));
 
-    wchar_t *pMemory=new wchar_t[sResult.size()+1];
+    wchar_t *pMemory=new wchar_t[sResult.size() + 1];
 
     sResult.toWCharArray(pMemory);
 
@@ -102,7 +108,21 @@ void DIE_lib::freeMemoryW(wchar_t *pwszString)
 {
     delete [] pwszString;
 }
+#ifdef Q_OS_WIN32
+int DIE_lib::VB_ScanFile(wchar_t *pwszFileName, unsigned int nFlags, wchar_t *pwszDatabase, wchar_t *pwszBuffer, int nBufferSize)
+{
+    int nResult = 0;
 
+    QString sResult=_scanFile(QString::fromWCharArray(pwszFileName,-1),nFlags,QString::fromWCharArray(pwszDatabase,-1));
+
+    if (sResult.size() < nBufferSize) {
+        sResult.toWCharArray(pwszBuffer);
+        nResult = sResult.size();
+    }
+
+    return nResult;
+}
+#endif
 QString DIE_lib::_scanFile(QString sFileName, quint32 nFlags, QString sDatabase)
 {
     QString sResult;
