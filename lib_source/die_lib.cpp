@@ -27,7 +27,7 @@ extern "C" {
 namespace QCoreAppDLL
 {
     static int argc = 1;
-    static char arg0[] = "die.cpp";
+    static char arg0[] = "die.dll";
     static char * argv[] = { arg0, nullptr };
     static QCoreApplication * pApp = nullptr;
 }
