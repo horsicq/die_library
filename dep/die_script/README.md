@@ -1,3 +1,0 @@
-# die_script
-
-Scripts
