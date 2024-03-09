@@ -1,0 +1,54 @@
+include_directories(${CMAKE_CURRENT_LIST_DIR})
+include_directories(${CMAKE_CURRENT_LIST_DIR}/images)
+include_directories(${CMAKE_CURRENT_LIST_DIR}/video)
+include_directories(${CMAKE_CURRENT_LIST_DIR}/audio)
+# TODO
+
+set(XFORMATS_SOURCES
+    ${CMAKE_CURRENT_LIST_DIR}/audio/xmp3.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/audio/xmp3.h
+    ${CMAKE_CURRENT_LIST_DIR}/images/xbmp.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/images/xbmp.h
+    ${CMAKE_CURRENT_LIST_DIR}/images/xgif.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/images/xgif.h
+    ${CMAKE_CURRENT_LIST_DIR}/images/xicon.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/images/xicon.h
+    ${CMAKE_CURRENT_LIST_DIR}/images/xjpeg.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/images/xjpeg.h
+    ${CMAKE_CURRENT_LIST_DIR}/images/xpng.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/images/xpng.h
+    ${CMAKE_CURRENT_LIST_DIR}/images/xtiff.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/images/xtiff.h
+    ${CMAKE_CURRENT_LIST_DIR}/subdevice.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/subdevice.h
+    ${CMAKE_CURRENT_LIST_DIR}/video/xmp4.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/video/xmp4.h
+    ${CMAKE_CURRENT_LIST_DIR}/video/xriff.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/video/xriff.h
+    ${CMAKE_CURRENT_LIST_DIR}/xbinary.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/xbinary.h
+    ${CMAKE_CURRENT_LIST_DIR}/xbinary_def.h
+    ${CMAKE_CURRENT_LIST_DIR}/xcom.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/xcom.h
+    ${CMAKE_CURRENT_LIST_DIR}/xcom_def.h
+    ${CMAKE_CURRENT_LIST_DIR}/xelf.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/xelf.h
+    ${CMAKE_CURRENT_LIST_DIR}/xelf_def.h
+    ${CMAKE_CURRENT_LIST_DIR}/xformats.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/xformats.h
+    ${CMAKE_CURRENT_LIST_DIR}/xle.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/xle.h
+    ${CMAKE_CURRENT_LIST_DIR}/xle_def.h
+    ${CMAKE_CURRENT_LIST_DIR}/xmach.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/xmach.h
+    ${CMAKE_CURRENT_LIST_DIR}/xmach_def.h
+    ${CMAKE_CURRENT_LIST_DIR}/xmsdos.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/xmsdos.h
+    ${CMAKE_CURRENT_LIST_DIR}/xmsdos_def.h
+    ${CMAKE_CURRENT_LIST_DIR}/xne.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/xne.h
+    ${CMAKE_CURRENT_LIST_DIR}/xne_def.h
+    ${CMAKE_CURRENT_LIST_DIR}/xpe.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/xpe.h
+    ${CMAKE_CURRENT_LIST_DIR}/xpe_def.h
+)

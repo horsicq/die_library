@@ -1,0 +1,7 @@
+// DIE's signature file
+// Author: DosX
+
+function detect() {
+    if (PE.isNET() && PE.isNETStringPresent("MetroFramework"))
+        _setResult("library", "MetroFramework UI", "", "");
+}

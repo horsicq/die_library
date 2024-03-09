@@ -1,0 +1,16 @@
+// DIE's signature file
+
+init("operation system","Windows");
+
+function detect(bShowType,bShowVersion,bShowOptions)
+{
+    if (NE.isVerbose()) {
+        sName = NE.getOperationSystemName();
+        sVersion = NE.getOperationSystemVersion();
+        sOptions = NE.getOperationSystemOptions();
+        
+        bDetected=1;
+    }
+
+    return result(bShowType,bShowVersion,bShowOptions);
+}
