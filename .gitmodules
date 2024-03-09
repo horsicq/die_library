@@ -22,3 +22,27 @@
 [submodule "XPDF"]
 	path = dep/XPDF
 	url = https://github.com/horsicq/XPDF
+[submodule "dep/Detect-It-Easy"]
+	path = dep/Detect-It-Easy
+	url = https://github.com/horsicq/Detect-It-Easy
+[submodule "dep/build_tools"]
+	path = dep/build_tools
+	url = https://github.com/horsicq/build_tools
+[submodule "dep/die_script"]
+	path = dep/die_script
+	url = https://github.com/horsicq/die_script
+[submodule "dep/Formats"]
+	path = dep/Formats
+	url = https://github.com/horsicq/Formats
+[submodule "dep/XArchive"]
+	path = dep/XArchive
+	url = https://github.com/horsicq/XArchive
+[submodule "dep/XCapstone"]
+	path = dep/XCapstone
+	url = https://github.com/horsicq/XCapstone
+[submodule "dep/XDEX"]
+	path = dep/XDEX
+	url = https://github.com/horsicq/XDEX
+[submodule "dep/XPDF"]
+	path = dep/XPDF
+	url = https://github.com/horsicq/XPDF
