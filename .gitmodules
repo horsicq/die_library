@@ -46,3 +46,6 @@
 [submodule "dep/XPDF"]
 	path = dep/XPDF
 	url = https://github.com/horsicq/XPDF
+[submodule "dep/XOptions"]
+	path = dep/XOptions
+	url = https://github.com/horsicq/XOptions
