@@ -1,0 +1,1 @@
+export PATH="/Application/CMake.app/Contents/bin:$PATH"cd ..mkdir tmp_buildcd tmp_buildcmake -DCMAKE_BUILD_TYPE=Release ..make
