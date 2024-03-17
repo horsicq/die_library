@@ -39,13 +39,18 @@ target_link_libraries(die_library PRIVATE lzma)
 target_link_libraries(die_library PRIVATE zlib)
 target_link_libraries(die_library PRIVATE capstone_x86)
 
-target_link_libraries(die_library PRIVATE Qt${QT_VERSION_MAJOR}::Core)
+if(${QT_VERSION_MAJOR} EQUAL 4)
+    target_link_libraries(die_library PRIVATE Qt4::QtCore)
+    target_link_libraries(die_library PRIVATE Qt4::QtScript)
+endif()
 
 if(${QT_VERSION_MAJOR} EQUAL 5)
+    target_link_libraries(die_library PRIVATE Qt${QT_VERSION_MAJOR}::Core)
     target_link_libraries(die_library PRIVATE Qt${QT_VERSION_MAJOR}::Script)
 endif()
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
+    target_link_libraries(die_library PRIVATE Qt${QT_VERSION_MAJOR}::Core)
     target_link_libraries(die_library PRIVATE Qt${QT_VERSION_MAJOR}::Qml)
 endif()
 
