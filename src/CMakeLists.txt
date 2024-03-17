@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 
-#find_package(QT NAMES Qt6 Qt5 Qt4 REQUIRED COMPONENTS Core)
-find_package(Qt4 4.8.7 REQUIRED QtCore QtScript)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core)
+#find_package(Qt4 4.8.7 REQUIRED QtCore QtScript)
 
 if(${QT_VERSION_MAJOR} EQUAL 5)
     find_package(Qt5 REQUIRED COMPONENTS Script)

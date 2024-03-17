@@ -90,11 +90,11 @@ char *DIE_lib::scanFileA(char *pszFileName, unsigned int nFlags, char *pszDataba
 
 wchar_t *DIE_lib::scanFileW(wchar_t *pwszFileName, unsigned int nFlags, wchar_t *pwszDatabase)
 {
-    QString sResult=_scanFile(QString::fromWCharArray(pwszFileName,-1),nFlags,QString::fromWCharArray(pwszDatabase,-1));
+    QString sResult=_scanFile(XBinary::_fromWCharArray(pwszFileName,-1),nFlags,XBinary::_fromWCharArray(pwszDatabase,-1));
 
     wchar_t *pMemory=new wchar_t[sResult.size() + 1];
 
-    sResult.toWCharArray(pMemory);
+    XBinary::_toWCharArray(sResult, pMemory);
 
     return pMemory;
 }
@@ -113,10 +113,10 @@ int DIE_lib::VB_ScanFile(wchar_t *pwszFileName, unsigned int nFlags, wchar_t *pw
 {
     int nResult = 0;
 
-    QString sResult=_scanFile(QString::fromWCharArray(pwszFileName,-1),nFlags,QString::fromWCharArray(pwszDatabase,-1));
+    QString sResult=_scanFile(XBinary::_fromWCharArray(pwszFileName,-1),nFlags,XBinary::_fromWCharArray(pwszDatabase,-1));
 
     if (sResult.size() < nBufferSize) {
-        sResult.toWCharArray(pwszBuffer);
+        XBinary::_toWCharArray(sResult, pwszBuffer);
         nResult = sResult.size();
     }
 
