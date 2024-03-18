@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(die_library LANGUAGES CXX)
+project(die LANGUAGES CXX)
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
@@ -21,6 +21,7 @@ add_definitions(
     )
 
 include(${CMAKE_CURRENT_LIST_DIR}/../../dep/die_script/die_script.cmake)
+include(GNUInstallDirs)
 
 set(PROJECT_SOURCES
         ${DIE_SCRIPT_SOURCES}
@@ -28,48 +29,48 @@ set(PROJECT_SOURCES
         die_lib.h
 )
     
-add_library(die_library SHARED
+add_library(die SHARED
     ${PROJECT_SOURCES}
 )
 
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
-target_link_libraries(die_library PRIVATE bzip2)
-target_link_libraries(die_library PRIVATE lzma)
-target_link_libraries(die_library PRIVATE zlib)
-target_link_libraries(die_library PRIVATE capstone_x86)
+target_link_libraries(die PRIVATE bzip2)
+target_link_libraries(die PRIVATE lzma)
+target_link_libraries(die PRIVATE zlib)
+target_link_libraries(die PRIVATE capstone_x86)
 
 if(${QT_VERSION_MAJOR} EQUAL 4)
-    target_link_libraries(die_library PRIVATE Qt4::QtCore)
-    target_link_libraries(die_library PRIVATE Qt4::QtScript)
+    target_link_libraries(die PRIVATE Qt4::QtCore)
+    target_link_libraries(die PRIVATE Qt4::QtScript)
 endif()
 
 if(${QT_VERSION_MAJOR} EQUAL 5)
-    target_link_libraries(die_library PRIVATE Qt${QT_VERSION_MAJOR}::Core)
-    target_link_libraries(die_library PRIVATE Qt${QT_VERSION_MAJOR}::Script)
+    target_link_libraries(die PRIVATE Qt${QT_VERSION_MAJOR}::Core)
+    target_link_libraries(die PRIVATE Qt${QT_VERSION_MAJOR}::Script)
 endif()
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    target_link_libraries(die_library PRIVATE Qt${QT_VERSION_MAJOR}::Core)
-    target_link_libraries(die_library PRIVATE Qt${QT_VERSION_MAJOR}::Qml)
+    target_link_libraries(die PRIVATE Qt${QT_VERSION_MAJOR}::Core)
+    target_link_libraries(die PRIVATE Qt${QT_VERSION_MAJOR}::Qml)
 endif()
 
 if(WIN32)
-    target_link_libraries(die_library PRIVATE Wintrust)
-    target_link_libraries(die_library PRIVATE Crypt32)
-    target_link_libraries(die_library PRIVATE comsuppwd)
+    target_link_libraries(die PRIVATE Wintrust)
+    target_link_libraries(die PRIVATE Crypt32)
+    target_link_libraries(die PRIVATE comsuppwd)
 endif()
 
 if(WIN32)
-    install (TARGETS die_library DESTINATION "./")
+    install (TARGETS die DESTINATION "./")
     install (DIRECTORY ../../dep/Detect-It-Easy/db DESTINATION "./")
     install (DIRECTORY ../../dep/Detect-It-Easy/db_custom DESTINATION "./")
     install (FILES ../include/die.h DESTINATION "./include"  OPTIONAL)
     deploy_qt()
     deploy_msvc()
 else()
-    install (TARGETS die_library DESTINATION ${CMAKE_INSTALL_LIBDIR})
-    install (DIRECTORY ../../dep/Detect-It-Easy/db DESTINATION ${CMAKE_INSTALL_LIBDIR}/die_library OPTIONAL)
-    install (DIRECTORY ../../dep/Detect-It-Easy/db_custom DESTINATION ${CMAKE_INSTALL_LIBDIR}/die_library OPTIONAL)
-    install (FILES ../include/die.h DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/die_library  OPTIONAL)
+    install (TARGETS die DESTINATION ${CMAKE_INSTALL_LIBDIR})
+    install (DIRECTORY ../../dep/Detect-It-Easy/db DESTINATION "${CMAKE_INSTALL_LIBDIR}/dielib" OPTIONAL)
+    install (DIRECTORY ../../dep/Detect-It-Easy/db_custom DESTINATION "${CMAKE_INSTALL_LIBDIR}/dielib" OPTIONAL)
+    install (FILES ../include/die.h DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/dielib"  OPTIONAL)
 endif()
