@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core)
+#find_package(Qt4 4.8.6 REQUIRED QtCore QtScript)
 #find_package(Qt4 4.8.7 REQUIRED QtCore QtScript)
 
 if(${QT_VERSION_MAJOR} EQUAL 5)
@@ -23,6 +24,13 @@ set(CPACK_PACKAGE_VENDOR "ntinfo")
 set(CPACK_DEBIAN_PACKAGE_MAINTAINER "horsicq@gmail.com")
 set(CPACK_DEBIAN_PACKAGE_HOMEPAGE "https://github.com/horsicq/die_library")
 set(CPACK_DEBIAN_PACKAGE_DESCRIPTION "Detect It Easy library")
+
+set(X_COMPANYNAME "ntinfo")
+set(X_PROJECTNAME "dielib")
+set(X_MAINTAINER "horsicq@gmail.com")
+set(X_DESCRIPTION "Detect It Easy library")
+set(X_HOMEPAGE "https://github.com/horsicq/die_library")
+set(X_ORIGINAL_FILENAME "dielib")
 
 deploy_init()
 
