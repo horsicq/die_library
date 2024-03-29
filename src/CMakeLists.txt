@@ -17,14 +17,6 @@ file (STRINGS ${PROJECT_SOURCE_DIR}/release_version.txt X_PROJECT_VERSION)
 
 project(XNetDumper VERSION ${X_PROJECT_VERSION} LANGUAGES CXX)
 
-set(CPACK_PACKAGE_INSTALL_DIRECTORY "dielib")
-set(CPACK_PACKAGE_INSTALL_REGISTRY_KEY "dielib")
-set(CPACK_PACKAGE_NAME "dielib")
-set(CPACK_PACKAGE_VENDOR "ntinfo")
-set(CPACK_DEBIAN_PACKAGE_MAINTAINER "horsicq@gmail.com")
-set(CPACK_DEBIAN_PACKAGE_HOMEPAGE "https://github.com/horsicq/die_library")
-set(CPACK_DEBIAN_PACKAGE_DESCRIPTION "Detect It Easy library")
-
 set(X_COMPANYNAME "ntinfo")
 set(X_PROJECTNAME "dielib")
 set(X_MAINTAINER "horsicq@gmail.com")
