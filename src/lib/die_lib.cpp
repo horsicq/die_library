@@ -179,9 +179,7 @@ QString DIE_lib::_scanFile(QString sFileName, quint32 nFlags, QString sDatabase)
 
     DiE_Script::SCAN_RESULT scanResult=dieScript.scanFile(sFileName, &options);
 
-    QList<XBinary::SCANSTRUCT> listResult = DiE_Script::convert(&(scanResult.listRecords));
-
-    ScanItemModel model(&listResult, 1, false);
+    ScanItemModel model(&(scanResult.listRecords), 1, false);
 
     XBinary::FORMATTYPE formatType = XBinary::FORMATTYPE_TEXT;
 
