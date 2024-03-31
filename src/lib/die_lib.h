@@ -28,32 +28,30 @@
 #endif
 
 #if defined(LIB_SOURCE_LIBRARY)
-#  define LIB_SOURCE_EXPORT Q_DECL_EXPORT
+#define LIB_SOURCE_EXPORT Q_DECL_EXPORT
 #else
-#  define LIB_SOURCE_EXPORT Q_DECL_IMPORT
+#define LIB_SOURCE_EXPORT Q_DECL_IMPORT
 #endif
 
-class DIE_lib
-{
+class DIE_lib {
 public:
-    enum SF
-    {
-        SF_DEEPSCAN         =0x00000001,
-        SF_HEURISTICSCAN    =0x00000002,
-        SF_ALLTYPESSCAN     =0x00000004,
-        SF_RECURSIVESCAN    =0x00000008,
-        SF_VERBOSE          =0x00000010,
-        SF_RESULTASXML      =0x00010000,
-        SF_RESULTASJSON     =0x00020000,
-        SF_RESULTASTSV      =0x00040000,
-        SF_RESULTASCSV      =0x00080000,
+    enum SF {
+        SF_DEEPSCAN = 0x00000001,
+        SF_HEURISTICSCAN = 0x00000002,
+        SF_ALLTYPESSCAN = 0x00000004,
+        SF_RECURSIVESCAN = 0x00000008,
+        SF_VERBOSE = 0x00000010,
+        SF_RESULTASXML = 0x00010000,
+        SF_RESULTASJSON = 0x00020000,
+        SF_RESULTASTSV = 0x00040000,
+        SF_RESULTASCSV = 0x00080000,
     };
 
     DIE_lib();
     ~DIE_lib();
 
     char *scanFileA(char *pszFileName, unsigned int nFlags, char *pszDatabase);
-    wchar_t *scanFileW(wchar_t *pwszFileName,unsigned int nFlags, wchar_t *pwszDatabase);
+    wchar_t *scanFileW(wchar_t *pwszFileName, unsigned int nFlags, wchar_t *pwszDatabase);
     void freeMemoryA(char *pszString);
     void freeMemoryW(wchar_t *pwszString);
 #ifdef Q_OS_WIN32
@@ -61,7 +59,7 @@ public:
 #endif
 
 private:
-    QString _scanFile(QString sFileName,quint32 nFlags, QString sDatabase);
+    QString _scanFile(QString sFileName, quint32 nFlags, QString sDatabase);
 };
 
-#endif // DIE_LIB_H
+#endif  // DIE_LIB_H

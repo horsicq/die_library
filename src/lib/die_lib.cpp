@@ -24,13 +24,12 @@
 extern "C" {
 #endif
 
-namespace QCoreAppDLL
-{
-    static int argc = 1;
-    static char arg0[] = "die.dll";
-    static char * argv[] = { arg0, nullptr };
-    static QCoreApplication * pApp = nullptr;
-}
+namespace QCoreAppDLL {
+static int argc = 1;
+static char arg0[] = "die.dll";
+static char *argv[] = {arg0, nullptr};
+static QCoreApplication *pApp = nullptr;
+}  // namespace QCoreAppDLL
 
 LIB_SOURCE_EXPORT char *DIE_ScanFileA(char *pszFileName, unsigned int nFlags, char *pszDatabase)
 {
@@ -65,24 +64,23 @@ LIB_SOURCE_EXPORT int DIE_VB_ScanFile(wchar_t *pwszFileName, unsigned int nFlags
 DIE_lib::DIE_lib()
 {
     QCoreAppDLL::pApp = new QCoreApplication(QCoreAppDLL::argc, QCoreAppDLL::argv);
-//    QCoreAppDLL::pApp->exec();
+    //    QCoreAppDLL::pApp->exec();
 }
 
 DIE_lib::~DIE_lib()
 {
-    if (QCoreAppDLL::pApp)
-        delete qApp;
+    if (QCoreAppDLL::pApp) delete qApp;
 }
 
 char *DIE_lib::scanFileA(char *pszFileName, unsigned int nFlags, char *pszDatabase)
 {
-    QString sResult=_scanFile(pszFileName,nFlags,pszDatabase);
+    QString sResult = _scanFile(pszFileName, nFlags, pszDatabase);
 
     QByteArray baResult = sResult.toUtf8();
 
-    char *pMemory=new char[baResult.size() + 1];
+    char *pMemory = new char[baResult.size() + 1];
 
-    XBinary::_copyMemory(pMemory,baResult.data(),baResult.size());
+    XBinary::_copyMemory(pMemory, baResult.data(), baResult.size());
     pMemory[baResult.size()] = 0;
 
     return pMemory;
@@ -90,9 +88,9 @@ char *DIE_lib::scanFileA(char *pszFileName, unsigned int nFlags, char *pszDataba
 
 wchar_t *DIE_lib::scanFileW(wchar_t *pwszFileName, unsigned int nFlags, wchar_t *pwszDatabase)
 {
-    QString sResult=_scanFile(XBinary::_fromWCharArray(pwszFileName,-1),nFlags,XBinary::_fromWCharArray(pwszDatabase,-1));
+    QString sResult = _scanFile(XBinary::_fromWCharArray(pwszFileName, -1), nFlags, XBinary::_fromWCharArray(pwszDatabase, -1));
 
-    wchar_t *pMemory=new wchar_t[sResult.size() + 1];
+    wchar_t *pMemory = new wchar_t[sResult.size() + 1];
 
     XBinary::_toWCharArray(sResult, pMemory);
 
@@ -101,19 +99,19 @@ wchar_t *DIE_lib::scanFileW(wchar_t *pwszFileName, unsigned int nFlags, wchar_t 
 
 void DIE_lib::freeMemoryA(char *pszString)
 {
-    delete [] pszString;
+    delete[] pszString;
 }
 
 void DIE_lib::freeMemoryW(wchar_t *pwszString)
 {
-    delete [] pwszString;
+    delete[] pwszString;
 }
 #ifdef Q_OS_WIN32
 int DIE_lib::VB_ScanFile(wchar_t *pwszFileName, unsigned int nFlags, wchar_t *pwszDatabase, wchar_t *pwszBuffer, int nBufferSize)
 {
     int nResult = 0;
 
-    QString sResult=_scanFile(XBinary::_fromWCharArray(pwszFileName,-1),nFlags,XBinary::_fromWCharArray(pwszDatabase,-1));
+    QString sResult = _scanFile(XBinary::_fromWCharArray(pwszFileName, -1), nFlags, XBinary::_fromWCharArray(pwszDatabase, -1));
 
     if (sResult.size() < nBufferSize) {
         XBinary::_toWCharArray(sResult, pwszBuffer);
@@ -127,46 +125,46 @@ QString DIE_lib::_scanFile(QString sFileName, quint32 nFlags, QString sDatabase)
 {
     QString sResult;
 
-    DiE_Script::OPTIONS options={};
+    DiE_Script::OPTIONS options = {};
 
     options.bShowType = true;
     options.bShowVersion = true;
     options.bShowOptions = true;
 
-    if(nFlags&SF_DEEPSCAN) {
-        options.bIsDeepScan=true;
+    if (nFlags & SF_DEEPSCAN) {
+        options.bIsDeepScan = true;
     }
 
-    if(nFlags&SF_HEURISTICSCAN) {
-        options.bIsHeuristicScan=true;
+    if (nFlags & SF_HEURISTICSCAN) {
+        options.bIsHeuristicScan = true;
     }
 
-    if(nFlags&SF_VERBOSE) {
-        options.bIsVerbose=true;
+    if (nFlags & SF_VERBOSE) {
+        options.bIsVerbose = true;
     }
 
-    if(nFlags&SF_ALLTYPESSCAN) {
-        options.bAllTypesScan=true;
+    if (nFlags & SF_ALLTYPESSCAN) {
+        options.bAllTypesScan = true;
     }
 
-    if(nFlags&SF_RECURSIVESCAN) {
-        options.bIsRecursiveScan=true;
+    if (nFlags & SF_RECURSIVESCAN) {
+        options.bIsRecursiveScan = true;
     }
 
-    if(nFlags&SF_RESULTASJSON) {
-        options.bResultAsJSON=true;
+    if (nFlags & SF_RESULTASJSON) {
+        options.bResultAsJSON = true;
     }
 
-    if(nFlags&SF_RESULTASXML) {
-        options.bResultAsXML=true;
+    if (nFlags & SF_RESULTASXML) {
+        options.bResultAsXML = true;
     }
 
-    if(nFlags&SF_RESULTASTSV) {
-        options.bResultAsTSV=true;
+    if (nFlags & SF_RESULTASTSV) {
+        options.bResultAsTSV = true;
     }
 
-    if(nFlags&SF_RESULTASCSV) {
-        options.bResultAsCSV=true;
+    if (nFlags & SF_RESULTASCSV) {
+        options.bResultAsCSV = true;
     }
 
     DiE_Script dieScript;
@@ -175,9 +173,9 @@ QString DIE_lib::_scanFile(QString sFileName, quint32 nFlags, QString sDatabase)
         sDatabase = "$app/db";
     }
 
-    dieScript.loadDatabase(sDatabase, true); // TODO Check
+    dieScript.loadDatabase(sDatabase, true);  // TODO Check
 
-    DiE_Script::SCAN_RESULT scanResult=dieScript.scanFile(sFileName, &options);
+    DiE_Script::SCAN_RESULT scanResult = dieScript.scanFile(sFileName, &options);
 
     ScanItemModel model(&(scanResult.listRecords), 1, false);
 
