@@ -6,10 +6,12 @@ find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core)
 
 if(${QT_VERSION_MAJOR} EQUAL 5)
     find_package(Qt5 REQUIRED COMPONENTS Script)
+    find_package(Qt5 REQUIRED COMPONENTS Concurrent)
 endif()
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Qml)
+    find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Concurrent)
 endif()
 
 include(../dep/build_tools/cmake/deploy.cmake)
