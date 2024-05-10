@@ -1,7 +1,9 @@
 #ifndef DIELIB_H
 #define DIELIB_H
 
+#ifdef _WIN32
 #include <windows.h>
+#endif
 
 // flags
 #define DIE_DEEPSCAN 0x00000001
@@ -21,8 +23,11 @@ extern "C" {
 char *DIE_ScanFileA(char *pszFileName, unsigned int nFlags, char *pszDatabase);
 wchar_t *DIE_ScanFileW(wchar_t *pwszFileName, unsigned int nFlags, wchar_t *pwszDatabase);
 void DIE_FreeMemoryA(char *pszString);
-void DIE_FreeMemoryW(char *pwszString);
+void DIE_FreeMemoryW(wchar_t *pwszString);
+
+#ifdef _WIN32
 int DIE_VB_ScanFile(wchar_t *pwszFileName, unsigned int nFlags, wchar_t *pwszDatabase, wchar_t *pwszBuffer, int nBufferSize);
+#endif
 
 #ifdef UNICODE
 #define DIE_ScanFile DIE_ScanFileW
