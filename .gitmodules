@@ -49,3 +49,6 @@
 [submodule "dep/XOptions"]
 	path = dep/XOptions
 	url = https://github.com/horsicq/XOptions
+[submodule "dep/XExtractor"]
+	path = dep/XExtractor
+	url = https://github.com/horsicq/XExtractor
