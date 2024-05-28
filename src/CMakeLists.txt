@@ -17,7 +17,7 @@ endif()
 include(../dep/build_tools/cmake/deploy.cmake)
 file (STRINGS ${PROJECT_SOURCE_DIR}/release_version.txt X_PROJECT_VERSION)
 
-project(XNetDumper VERSION ${X_PROJECT_VERSION} LANGUAGES CXX)
+project(die_lib VERSION ${X_PROJECT_VERSION} LANGUAGES CXX)
 
 set(X_COMPANYNAME "ntinfo")
 set(X_PROJECTNAME "dielib")

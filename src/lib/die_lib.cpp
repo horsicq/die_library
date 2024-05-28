@@ -46,9 +46,9 @@ LIB_SOURCE_EXPORT void DIE_FreeMemoryA(char *pszString)
     DIE_lib().freeMemoryA(pszString);
 }
 
-LIB_SOURCE_EXPORT void DIE_FreeMemoryW(char *pwszString)
+LIB_SOURCE_EXPORT void DIE_FreeMemoryW(wchar_t *pwszString)
 {
-    DIE_lib().freeMemoryA(pwszString);
+    DIE_lib().freeMemoryW(pwszString);
 }
 #ifdef Q_OS_WIN32
 LIB_SOURCE_EXPORT int DIE_VB_ScanFile(wchar_t *pwszFileName, unsigned int nFlags, wchar_t *pwszDatabase, wchar_t *pwszBuffer, int nBufferSize)

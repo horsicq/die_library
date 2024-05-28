@@ -24,6 +24,10 @@ endif()
 add_definitions(
     -DQT_DEPRECATED_WARNINGS
     -DLIB_SOURCE_LIBRARY
+    -DUSE_DEX
+    -DUSE_PDF
+    -DUSE_ARCHIVE
+    -DUSE_YARA
     )
 
 include(${CMAKE_CURRENT_LIST_DIR}/../../dep/die_script/die_script.cmake)
