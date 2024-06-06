@@ -38,10 +38,18 @@ set(PROJECT_SOURCES
         die_lib.cpp
         die_lib.h
 )
-    
-add_library(die SHARED
-    ${PROJECT_SOURCES}
-)
+
+if(DIE_BUILD_AS_STATIC)
+    message(STATUS "Building DieLib as static")
+    add_library(die STATIC
+        ${PROJECT_SOURCES}
+    )
+else()
+    message(STATUS "Building DieLib as shared")
+    add_library(die SHARED
+        ${PROJECT_SOURCES}
+    )
+endif()
 
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
