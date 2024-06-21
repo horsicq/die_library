@@ -1,0 +1,8 @@
+LIBRARY die.dll
+
+EXPORTS
+DIE_FreeMemoryA
+DIE_FreeMemoryW
+DIE_ScanFileA
+DIE_ScanFileW
+DIE_VB_ScanFile
