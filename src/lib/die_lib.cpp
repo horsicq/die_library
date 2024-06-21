@@ -130,6 +130,7 @@ QString DIE_lib::_scanFile(QString sFileName, quint32 nFlags, QString sDatabase)
     options.bShowType = true;
     options.bShowVersion = true;
     options.bShowOptions = true;
+    options.nBufferSize = 2 * 1024 * 1024;
 
     if (nFlags & SF_DEEPSCAN) {
         options.bIsDeepScan = true;
