@@ -125,7 +125,7 @@ QString DIE_lib::_scanFile(QString sFileName, quint32 nFlags, QString sDatabase)
 {
     QString sResult;
 
-    XBinary::SCAN_OPTIONS options = {};
+    XScanEngine::SCAN_OPTIONS options = {};
 
     options.bShowType = true;
     options.bShowVersion = true;
@@ -176,7 +176,7 @@ QString DIE_lib::_scanFile(QString sFileName, quint32 nFlags, QString sDatabase)
 
     dieScript.loadDatabase(sDatabase, true);  // TODO Check
 
-    XBinary::SCAN_RESULT scanResult = dieScript.scanFile(sFileName, &options);
+    XScanEngine::SCAN_RESULT scanResult = dieScript.scanFile(sFileName, &options);
 
     ScanItemModel model(&(scanResult.listRecords), 1, false);
 

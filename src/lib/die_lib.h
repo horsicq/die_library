@@ -22,6 +22,7 @@
 #define DIE_LIB_H
 
 #include "die_script.h"
+#include "scanitemmodel.h"
 #ifdef Q_OS_WIN32
 #include <windows.h>
 #include <comutil.h>
