@@ -125,47 +125,47 @@ QString DIE_lib::_scanFile(QString sFileName, quint32 nFlags, QString sDatabase)
 {
     QString sResult;
 
-    XScanEngine::SCAN_OPTIONS options = {};
+    XScanEngine::SCAN_OPTIONS scanOptions = {};
 
-    options.bShowType = true;
-    options.bShowVersion = true;
-    options.bShowOptions = true;
-    options.nBufferSize = 2 * 1024 * 1024;
+    scanOptions.bShowType = true;
+    scanOptions.bShowVersion = true;
+    scanOptions.bShowInfo = true;
+    scanOptions.nBufferSize = 2 * 1024 * 1024;
 
     if (nFlags & SF_DEEPSCAN) {
-        options.bIsDeepScan = true;
+        scanOptions.bIsDeepScan = true;
     }
 
     if (nFlags & SF_HEURISTICSCAN) {
-        options.bIsHeuristicScan = true;
+        scanOptions.bIsHeuristicScan = true;
     }
 
     if (nFlags & SF_VERBOSE) {
-        options.bIsVerbose = true;
+        scanOptions.bIsVerbose = true;
     }
 
     if (nFlags & SF_ALLTYPESSCAN) {
-        options.bAllTypesScan = true;
+        scanOptions.bIsAllTypesScan = true;
     }
 
     if (nFlags & SF_RECURSIVESCAN) {
-        options.bIsRecursiveScan = true;
+        scanOptions.bIsRecursiveScan = true;
     }
 
     if (nFlags & SF_RESULTASJSON) {
-        options.bResultAsJSON = true;
+        scanOptions.bResultAsJSON = true;
     }
 
     if (nFlags & SF_RESULTASXML) {
-        options.bResultAsXML = true;
+        scanOptions.bResultAsXML = true;
     }
 
     if (nFlags & SF_RESULTASTSV) {
-        options.bResultAsTSV = true;
+        scanOptions.bResultAsTSV = true;
     }
 
     if (nFlags & SF_RESULTASCSV) {
-        options.bResultAsCSV = true;
+        scanOptions.bResultAsCSV = true;
     }
 
     DiE_Script dieScript;
@@ -174,18 +174,18 @@ QString DIE_lib::_scanFile(QString sFileName, quint32 nFlags, QString sDatabase)
         sDatabase = "$app/db";
     }
 
-    dieScript.loadDatabase(sDatabase, true);  // TODO Check
+    dieScript.loadDatabase(&scanOptions, sDatabase, "main");  // TODO Check
 
-    XScanEngine::SCAN_RESULT scanResult = dieScript.scanFile(sFileName, &options);
+    XScanEngine::SCAN_RESULT scanResult = dieScript.scanFile(sFileName, &scanOptions);
 
-    ScanItemModel model(&(scanResult.listRecords), 1, false);
+    ScanItemModel model(&scanOptions, &(scanResult.listRecords), 1);
 
     XBinary::FORMATTYPE formatType = XBinary::FORMATTYPE_TEXT;
 
-    if (options.bResultAsCSV) formatType = XBinary::FORMATTYPE_CSV;
-    else if (options.bResultAsJSON) formatType = XBinary::FORMATTYPE_JSON;
-    else if (options.bResultAsTSV) formatType = XBinary::FORMATTYPE_TSV;
-    else if (options.bResultAsXML) formatType = XBinary::FORMATTYPE_XML;
+    if (scanOptions.bResultAsCSV) formatType = XBinary::FORMATTYPE_CSV;
+    else if (scanOptions.bResultAsJSON) formatType = XBinary::FORMATTYPE_JSON;
+    else if (scanOptions.bResultAsTSV) formatType = XBinary::FORMATTYPE_TSV;
+    else if (scanOptions.bResultAsXML) formatType = XBinary::FORMATTYPE_XML;
 
     sResult = model.toString(formatType);
 
