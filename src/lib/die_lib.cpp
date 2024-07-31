@@ -174,7 +174,7 @@ QString DIE_lib::_scanFile(QString sFileName, quint32 nFlags, QString sDatabase)
         sDatabase = "$app/db";
     }
 
-    dieScript.loadDatabase(&scanOptions, sDatabase, "main");  // TODO Check
+    dieScript.loadDatabase(sDatabase, DiE_ScriptEngine::DT_MAIN);  // TODO Check
 
     XScanEngine::SCAN_RESULT scanResult = dieScript.scanFile(sFileName, &scanOptions);
 
