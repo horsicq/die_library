@@ -36,23 +36,19 @@
 
 class DIE_lib {
 public:
-    enum SF {
-        SF_DEEPSCAN = 0x00000001,
-        SF_HEURISTICSCAN = 0x00000002,
-        SF_ALLTYPESSCAN = 0x00000004,
-        SF_RECURSIVESCAN = 0x00000008,
-        SF_VERBOSE = 0x00000010,
-        SF_RESULTASXML = 0x00010000,
-        SF_RESULTASJSON = 0x00020000,
-        SF_RESULTASTSV = 0x00040000,
-        SF_RESULTASCSV = 0x00080000,
-    };
-
     DIE_lib();
     ~DIE_lib();
 
     char *scanFileA(char *pszFileName, unsigned int nFlags, char *pszDatabase);
     wchar_t *scanFileW(wchar_t *pwszFileName, unsigned int nFlags, wchar_t *pwszDatabase);
+    char *scanMemoryA(char *pMemory, int nMemorySize, unsigned int nFlags, char *pszDatabase);
+    wchar_t *scanMemoryW(char *pMemory, int nMemorySize, unsigned int nFlags, wchar_t *pwszDatabase);
+    bool loadDatabaseA(char *pszDatabase);
+    bool loadDatabaseW(wchar_t *pwszDatabase);
+    char *scanFileExA(char *pszFileName, unsigned int nFlags);
+    wchar_t *scanFileExW(wchar_t *pwszFileName, unsigned int nFlags);
+    char *scanMemoryExA(char *pMemory, int nMemorySize, unsigned int nFlags);
+    wchar_t *scanMemoryExW(char *pMemory, int nMemorySize, unsigned int nFlags);
     void freeMemoryA(char *pszString);
     void freeMemoryW(wchar_t *pwszString);
 #ifdef Q_OS_WIN32
@@ -60,7 +56,14 @@ public:
 #endif
 
 private:
+    bool _loadDatabase(QString sDatabase);
+    QString _scanFile(QString sFileName, quint32 nFlags);
+    QString _scanMemory(char *pMemory, int nMemorySize, quint32 nFlags);
     QString _scanFile(QString sFileName, quint32 nFlags, QString sDatabase);
+    QString _scanMemory(char *pMemory, int nMemorySize, quint32 nFlags, QString sDatabase);
+
+private:
+    DiE_Script *g_pDieScript;
 };
 
 #endif  // DIE_LIB_H

@@ -1,8 +1,16 @@
 LIBRARY die.dll
 
 EXPORTS
+DIE_LoadDatebaseA
+DIE_LoadDatebaseW
 DIE_FreeMemoryA
 DIE_FreeMemoryW
 DIE_ScanFileA
 DIE_ScanFileW
+DIE_ScanMemoryA
+DIE_ScanMemoryW
+DIE_ScanFileExA
+DIE_ScanFileExW
+DIE_ScanMemoryExA
+DIE_ScanMemoryExW
 DIE_VB_ScanFile
