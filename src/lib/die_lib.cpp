@@ -141,13 +141,13 @@ wchar_t *DIE_lib::scanFileW(wchar_t *pwszFileName, unsigned int nFlags, wchar_t 
 
 char *DIE_lib::scanMemoryA(char *pMemory, int nMemorySize, unsigned int nFlags, char *pszDatabase)
 {
-    QString sResult=_scanMemory(pMemory, nMemorySize, nFlags, pszDatabase);
+    QString sResult = _scanMemory(pMemory, nMemorySize, nFlags, pszDatabase);
 
     QByteArray baResult = sResult.toUtf8();
 
-    char *pBuffer=new char[baResult.size() + 1];
+    char *pBuffer = new char[baResult.size() + 1];
 
-    XBinary::_copyMemory(pBuffer,baResult.data(),baResult.size());
+    XBinary::_copyMemory(pBuffer, baResult.data(), baResult.size());
     pBuffer[baResult.size()] = 0;
 
     return pBuffer;
@@ -155,11 +155,11 @@ char *DIE_lib::scanMemoryA(char *pMemory, int nMemorySize, unsigned int nFlags, 
 
 wchar_t *DIE_lib::scanMemoryW(char *pMemory, int nMemorySize, unsigned int nFlags, wchar_t *pwszDatabase)
 {
-    QString sResult=_scanMemory(pMemory, nMemorySize, nFlags, XBinary::_fromWCharArray(pwszDatabase, -1));
+    QString sResult = _scanMemory(pMemory, nMemorySize, nFlags, XBinary::_fromWCharArray(pwszDatabase, -1));
 
-    int nSize=(sResult.size()+1)*2;
+    int nSize = (sResult.size() + 1) * 2;
 
-    char *pBuffer=new char[nSize];
+    char *pBuffer = new char[nSize];
 
     sResult.toWCharArray((wchar_t *)pBuffer);
 
@@ -203,13 +203,13 @@ wchar_t *DIE_lib::scanFileExW(wchar_t *pwszFileName, unsigned int nFlags)
 
 char *DIE_lib::scanMemoryExA(char *pMemory, int nMemorySize, unsigned int nFlags)
 {
-    QString sResult=_scanMemory(pMemory, nMemorySize, nFlags);
+    QString sResult = _scanMemory(pMemory, nMemorySize, nFlags);
 
     QByteArray baResult = sResult.toUtf8();
 
-    char *pBuffer=new char[baResult.size() + 1];
+    char *pBuffer = new char[baResult.size() + 1];
 
-    XBinary::_copyMemory(pBuffer,baResult.data(),baResult.size());
+    XBinary::_copyMemory(pBuffer, baResult.data(), baResult.size());
     pBuffer[baResult.size()] = 0;
 
     return pBuffer;
@@ -217,11 +217,11 @@ char *DIE_lib::scanMemoryExA(char *pMemory, int nMemorySize, unsigned int nFlags
 
 wchar_t *DIE_lib::scanMemoryExW(char *pMemory, int nMemorySize, unsigned int nFlags)
 {
-    QString sResult=_scanMemory(pMemory, nMemorySize, nFlags);
+    QString sResult = _scanMemory(pMemory, nMemorySize, nFlags);
 
-    int nSize=(sResult.size()+1)*2;
+    int nSize = (sResult.size() + 1) * 2;
 
-    char *pBuffer=new char[nSize];
+    char *pBuffer = new char[nSize];
 
     sResult.toWCharArray((wchar_t *)pBuffer);
 
