@@ -51,12 +51,12 @@ LIB_SOURCE_EXPORT wchar_t *DIE_ScanMemoryW(char *pMemory, int nMemorySize, unsig
     return DIE_lib().scanMemoryW(pMemory, nMemorySize, nFlags, pwszDatabase);
 }
 
-LIB_SOURCE_EXPORT bool DIE_LoadDatabaseA(char *pszDatabase)
+LIB_SOURCE_EXPORT int DIE_LoadDatabaseA(char *pszDatabase)
 {
     return DIE_lib().loadDatabaseA(pszDatabase);
 }
 
-LIB_SOURCE_EXPORT bool DIE_LoadDatabaseW(wchar_t *pwszDatabase)
+LIB_SOURCE_EXPORT int DIE_LoadDatabaseW(wchar_t *pwszDatabase)
 {
     return DIE_lib().loadDatabaseW(pwszDatabase);
 }
@@ -103,16 +103,23 @@ LIB_SOURCE_EXPORT int DIE_VB_ScanFile(wchar_t *pwszFileName, unsigned int nFlags
 
 DIE_lib::DIE_lib()
 {
+#ifndef QT_DEBUG
+    qputenv("QT_LOGGING_RULES", "qt.*=false");
+#endif
     QCoreAppDLL::pApp = new QCoreApplication(QCoreAppDLL::argc, QCoreAppDLL::argv);
-    g_pDieScript = new DiE_Script;
+
+    if (!g_pDieScript) {
+        g_pDieScript = new DiE_Script;
+    }
     //    QCoreAppDLL::pApp->exec();
 }
 
 DIE_lib::~DIE_lib()
 {
-    if (g_pDieScript) delete g_pDieScript;
     if (QCoreAppDLL::pApp) delete qApp;
 }
+
+DiE_Script *DIE_lib::g_pDieScript = nullptr;
 
 char *DIE_lib::scanFileA(char *pszFileName, unsigned int nFlags, char *pszDatabase)
 {
@@ -166,19 +173,19 @@ wchar_t *DIE_lib::scanMemoryW(char *pMemory, int nMemorySize, unsigned int nFlag
     return (wchar_t *)pBuffer;
 }
 
-bool DIE_lib::loadDatabaseA(char *pszDatabase)
+int DIE_lib::loadDatabaseA(char *pszDatabase)
 {
     return _loadDatabase(pszDatabase);
 }
 
-bool DIE_lib::loadDatabaseW(wchar_t *pwszDatabase)
+int DIE_lib::loadDatabaseW(wchar_t *pwszDatabase)
 {
     return _loadDatabase(XBinary::_fromWCharArray(pwszDatabase, -1));
 }
 
 char *DIE_lib::scanFileExA(char *pszFileName, unsigned int nFlags)
 {
-    QString sResult = _scanFile(pszFileName, nFlags);
+    QString sResult = _scanFileEx(pszFileName, nFlags);
 
     QByteArray baResult = sResult.toUtf8();
 
@@ -192,7 +199,7 @@ char *DIE_lib::scanFileExA(char *pszFileName, unsigned int nFlags)
 
 wchar_t *DIE_lib::scanFileExW(wchar_t *pwszFileName, unsigned int nFlags)
 {
-    QString sResult = _scanFile(XBinary::_fromWCharArray(pwszFileName, -1), nFlags);
+    QString sResult = _scanFileEx(XBinary::_fromWCharArray(pwszFileName, -1), nFlags);
 
     wchar_t *bBuffer = new wchar_t[sResult.size() + 1];
 
@@ -203,7 +210,7 @@ wchar_t *DIE_lib::scanFileExW(wchar_t *pwszFileName, unsigned int nFlags)
 
 char *DIE_lib::scanMemoryExA(char *pMemory, int nMemorySize, unsigned int nFlags)
 {
-    QString sResult = _scanMemory(pMemory, nMemorySize, nFlags);
+    QString sResult = _scanMemoryEx(pMemory, nMemorySize, nFlags);
 
     QByteArray baResult = sResult.toUtf8();
 
@@ -217,7 +224,7 @@ char *DIE_lib::scanMemoryExA(char *pMemory, int nMemorySize, unsigned int nFlags
 
 wchar_t *DIE_lib::scanMemoryExW(char *pMemory, int nMemorySize, unsigned int nFlags)
 {
-    QString sResult = _scanMemory(pMemory, nMemorySize, nFlags);
+    QString sResult = _scanMemoryEx(pMemory, nMemorySize, nFlags);
 
     int nSize = (sResult.size() + 1) * 2;
 
@@ -263,21 +270,25 @@ bool DIE_lib::_loadDatabase(QString sDatabase)
     return bResult;
 }
 
-QString DIE_lib::_scanFile(QString sFileName, quint32 nFlags)
+QString DIE_lib::_scanFileEx(QString sFileName, quint32 nFlags)
 {
     XScanEngine::SCAN_OPTIONS scanOptions = XScanEngine::getDefaultOptions(nFlags);
 
-    XScanEngine::SCAN_RESULT scanResult = g_pDieScript->scanFile(sFileName, &scanOptions);
+    DiE_Script dieScript = *g_pDieScript;
+
+    XScanEngine::SCAN_RESULT scanResult = dieScript.scanFile(sFileName, &scanOptions);
     ScanItemModel model(&scanOptions, &(scanResult.listRecords), 1);
 
     return model.toString();
 }
 
-QString DIE_lib::_scanMemory(char *pMemory, int nMemorySize, quint32 nFlags)
+QString DIE_lib::_scanMemoryEx(char *pMemory, int nMemorySize, quint32 nFlags)
 {
     XScanEngine::SCAN_OPTIONS scanOptions = XScanEngine::getDefaultOptions(nFlags);
 
-    XScanEngine::SCAN_RESULT scanResult = g_pDieScript->scanMemory(pMemory, nMemorySize, &scanOptions);
+    DiE_Script dieScript = *g_pDieScript;
+
+    XScanEngine::SCAN_RESULT scanResult = dieScript.scanMemory(pMemory, nMemorySize, &scanOptions);
     ScanItemModel model(&scanOptions, &(scanResult.listRecords), 1);
 
     return model.toString();

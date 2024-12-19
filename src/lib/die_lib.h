@@ -43,8 +43,8 @@ public:
     wchar_t *scanFileW(wchar_t *pwszFileName, unsigned int nFlags, wchar_t *pwszDatabase);
     char *scanMemoryA(char *pMemory, int nMemorySize, unsigned int nFlags, char *pszDatabase);
     wchar_t *scanMemoryW(char *pMemory, int nMemorySize, unsigned int nFlags, wchar_t *pwszDatabase);
-    bool loadDatabaseA(char *pszDatabase);
-    bool loadDatabaseW(wchar_t *pwszDatabase);
+    int loadDatabaseA(char *pszDatabase);
+    int loadDatabaseW(wchar_t *pwszDatabase);
     char *scanFileExA(char *pszFileName, unsigned int nFlags);
     wchar_t *scanFileExW(wchar_t *pwszFileName, unsigned int nFlags);
     char *scanMemoryExA(char *pMemory, int nMemorySize, unsigned int nFlags);
@@ -57,13 +57,13 @@ public:
 
 private:
     bool _loadDatabase(QString sDatabase);
-    QString _scanFile(QString sFileName, quint32 nFlags);
-    QString _scanMemory(char *pMemory, int nMemorySize, quint32 nFlags);
+    QString _scanFileEx(QString sFileName, quint32 nFlags);
+    QString _scanMemoryEx(char *pMemory, int nMemorySize, quint32 nFlags);
     QString _scanFile(QString sFileName, quint32 nFlags, QString sDatabase);
     QString _scanMemory(char *pMemory, int nMemorySize, quint32 nFlags, QString sDatabase);
 
 private:
-    DiE_Script *g_pDieScript;
+    static DiE_Script *g_pDieScript;
 };
 
 #endif  // DIE_LIB_H

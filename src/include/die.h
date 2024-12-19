@@ -24,12 +24,12 @@ char *DIE_ScanFileA(char *pszFileName, unsigned int nFlags, char *pszDatabase);
 wchar_t *DIE_ScanFileW(wchar_t *pwszFileName, unsigned int nFlags, wchar_t *pwszDatabase);
 char *DIE_ScanMemoryA(char *pMemory, int nMemorySize, unsigned int nFlags, char *pszDatabase);
 wchar_t *DIE_ScanMemoryW(char *pMemory, int nMemorySize, unsigned int nFlags, wchar_t *pwszDatabase);
-bool DIE_LoadDatabaseA(char *pszDatabase);
-bool DIE_LoadDatabaseW(wchar_t *pwszDatabase);
-char *DIE_ScanFileA(char *pszFileName, unsigned int nFlags);
-wchar_t *DIE_ScanFileW(wchar_t *pwszFileName, unsigned int nFlags);
-char *DIE_ScanMemoryA(char *pMemory, int nMemorySize, unsigned int nFlags);
-wchar_t *DIE_ScanMemoryW(char *pMemory, int nMemorySize, unsigned int nFlags);
+int DIE_LoadDatabaseA(char *pszDatabase);
+int DIE_LoadDatabaseW(wchar_t *pwszDatabase);
+char *DIE_ScanFileExA(char *pszFileName, unsigned int nFlags);
+wchar_t *DIE_ScanFileExW(wchar_t *pwszFileName, unsigned int nFlags);
+char *DIE_ScanMemoryExA(char *pMemory, int nMemorySize, unsigned int nFlags);
+wchar_t *DIE_ScanMemoryExW(char *pMemory, int nMemorySize, unsigned int nFlags);
 void DIE_FreeMemoryA(char *pszString);
 void DIE_FreeMemoryW(wchar_t *pwszString);
 
