@@ -28,7 +28,8 @@ namespace QCoreAppDLL {
 static int argc = 1;
 static char arg0[] = "die.dll";
 static char *argv[] = {arg0, nullptr};
-static QCoreApplication *pApp = nullptr;
+static std::shared_ptr<QCoreApplication> pApp = nullptr;
+static std::mutex pApp_mutex;
 }  // namespace QCoreAppDLL
 
 LIB_SOURCE_EXPORT char *DIE_ScanFileA(char *pszFileName, unsigned int nFlags, char *pszDatabase)
@@ -106,7 +107,11 @@ DIE_lib::DIE_lib()
 #ifndef QT_DEBUG
     qputenv("QT_LOGGING_RULES", "qt.*=false");
 #endif
-    QCoreAppDLL::pApp = new QCoreApplication(QCoreAppDLL::argc, QCoreAppDLL::argv);
+    std::lock_guard<std::mutex> scope_guard(QCoreAppDLL::pApp_mutex);
+    if (!QCoreAppDLL::pApp)
+    {
+        QCoreAppDLL::pApp = std::make_shared<QCoreApplication>(QCoreAppDLL::argc, QCoreAppDLL::argv);
+    }
 
     if (!g_pDieScript) {
         g_pDieScript = new DiE_Script;
@@ -116,7 +121,6 @@ DIE_lib::DIE_lib()
 
 DIE_lib::~DIE_lib()
 {
-    if (QCoreAppDLL::pApp) delete qApp;
 }
 
 DiE_Script *DIE_lib::g_pDieScript = nullptr;
