@@ -32,6 +32,15 @@ static std::shared_ptr<QCoreApplication> pApp = nullptr;
 static std::mutex pApp_mutex;
 }  // namespace QCoreAppDLL
 
+static void StaticDeletePointer(void *p)
+{
+    if (p)
+    {
+        delete p;
+        p = nullptr;
+    }
+}
+
 LIB_SOURCE_EXPORT char *DIE_ScanFileA(char *pszFileName, unsigned int nFlags, char *pszDatabase)
 {
     return DIE_lib().scanFileA(pszFileName, nFlags, pszDatabase);
@@ -110,8 +119,10 @@ DIE_lib::DIE_lib()
     std::lock_guard<std::mutex> scope_guard(QCoreAppDLL::pApp_mutex);
     if (!QCoreAppDLL::pApp)
     {
-        QCoreAppDLL::pApp = std::make_shared<QCoreApplication>(QCoreAppDLL::argc, QCoreAppDLL::argv);
+        QCoreAppDLL::pApp = std::shared_ptr<QCoreApplication>(new QCoreApplication(QCoreAppDLL::argc, QCoreAppDLL::argv), StaticDeletePointer);
     }
+
+    m_App = QCoreAppDLL::pApp;
 
     if (!g_pDieScript) {
         g_pDieScript = new DiE_Script;
