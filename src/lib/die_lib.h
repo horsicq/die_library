@@ -64,6 +64,7 @@ private:
 
 private:
     static DiE_Script *g_pDieScript;
+    std::shared_ptr<QCoreApplication> m_App;
 };
 
 #endif  // DIE_LIB_H
