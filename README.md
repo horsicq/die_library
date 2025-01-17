@@ -2,7 +2,7 @@
 
 ## Overview
 
-The DiE (Detect It Easy) library is an open-source project designed to provide a flexible and efficient way to detect packers, cryptors, and compilers in executable files. This documentation will guide you through the process of setting up and building the DiE library.
+The DiE (Detect It Easy) library is an open-source project designed to provide a flexible and efficient way to detect packers, cryptors, and compilers in executable files. This documentation will guide you through the setup and usage of the library.
 
 ## Table of Contents
 
@@ -10,7 +10,8 @@ The DiE (Detect It Easy) library is an open-source project designed to provide a
 2. [Installation](#installation)
 3. [Building the Project](#building-the-project)
 4. [Python Binding](#python-binding)
-5. [License](#license)
+5. [Rust Binding](#rust-binding)
+6. [License](#license)
 
 ## Prerequisites
 
@@ -79,6 +80,10 @@ Before building the DiE library, ensure you have the following dependencies inst
 
 To build the Python binding for the DiE library, refer to the [die-python](https://github.com/elastic/die-python) repository.
 
+## Rust Binding
+
+To build the Rust binding for the DiE library, refer to the [die-rust](https://github.com/elastic/die-rust) repository.
+
 ## License
 
 The DiE library is released under the MIT License. See the [LICENSE](LICENSE) file for more details.
@@ -86,4 +91,3 @@ The DiE library is released under the MIT License. See the [LICENSE](LICENSE) fi
 ---
 
 For further assistance, please refer to the issues section on the [GitHub repository](https://github.com/horsicq/die_library/issues) or contact the maintainers.
-
