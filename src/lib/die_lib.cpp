@@ -34,8 +34,7 @@ static std::mutex pApp_mutex;
 
 static void StaticDeletePointer(void *p)
 {
-    if (p)
-    {
+    if (p) {
         delete p;
         p = nullptr;
     }
@@ -117,8 +116,7 @@ DIE_lib::DIE_lib()
     qputenv("QT_LOGGING_RULES", "qt.*=false");
 #endif
     std::lock_guard<std::mutex> scope_guard(QCoreAppDLL::pApp_mutex);
-    if (!QCoreAppDLL::pApp)
-    {
+    if (!QCoreAppDLL::pApp) {
         QCoreAppDLL::pApp = std::shared_ptr<QCoreApplication>(new QCoreApplication(QCoreAppDLL::argc, QCoreAppDLL::argv), StaticDeletePointer);
     }
 
