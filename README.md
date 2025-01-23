@@ -2,7 +2,7 @@
 
 ## Overview
 
-The DiE (Detect It Easy) library is an open-source project designed to provide a flexible and efficient way to detect packers, cryptors, and compilers in executable files. This documentation will guide you through the setup and usage of the library.
+The DiE (Detect It Easy) library is an open-source project designed to provide a flexible and efficient way to detect packers, cryptors, and compilers in executable files. This documentation will guide you through the process of setting up and using the library.
 
 ## Table of Contents
 
@@ -24,26 +24,36 @@ Before building the DiE library, ensure you have the following dependencies inst
 ## Installation
 
 1. **Clone the repository**:
-   `git clone --recursive https://github.com/horsicq/die_library.git`
-   `cd die_library`
+
+git clone --recursive https://github.com/horsicq/die_library.git
+cd die_library
 
 ## Building the Project
 
 ### Linux
 
 1. **Install Qt and CMake**:
-   `sudo apt-get update`
-   `sudo apt-get install qt5-default cmake build-essential`
+
+For Debian 10 (Buster) and Ubuntu 18.04 (Bionic Beaver) and earlier:
+sudo apt-get update
+sudo apt-get install qt5-default cmake build-essential
+
+For Debian 11 (Bullseye) and Ubuntu 20.04 (Focal Fossa) and later:
+sudo apt-get update
+sudo apt-get install qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools qtscript5-dev
 
 2. **Create a build directory**:
-   `mkdir build`
-   `cd build`
+
+mkdir build
+cd build
 
 3. **Generate Makefiles using CMake**:
-   `cmake ..`
+
+cmake ..
 
 4. **Build the project**:
-   `make`
+
+make
 
 ### Windows
 
@@ -52,11 +62,13 @@ Before building the DiE library, ensure you have the following dependencies inst
    - Download and install CMake from [CMake's official website](https://cmake.org/download/).
 
 2. **Create a build directory**:
-   `mkdir build`
-   `cd build`
+
+mkdir build
+cd build
 
 3. **Generate Visual Studio project files using CMake**:
-   `cmake .. -G "Visual Studio 16 2019"`
+
+cmake .. -G "Visual Studio 16 2019"
 
 4. **Build the project**:
    Open the generated `.sln` file in Visual Studio and build the solution.
@@ -64,17 +76,21 @@ Before building the DiE library, ensure you have the following dependencies inst
 ### macOS
 
 1. **Install Qt and CMake**:
-   `brew install qt cmake`
+
+brew install qt cmake
 
 2. **Create a build directory**:
-   `mkdir build`
-   `cd build`
+
+mkdir build
+cd build
 
 3. **Generate Makefiles using CMake**:
-   `cmake ..`
+
+cmake ..
 
 4. **Build the project**:
-   `make`
+
+make
 
 ## Python Binding
 
