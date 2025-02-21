@@ -28,6 +28,7 @@ add_definitions(
     -DUSE_PDF
     -DUSE_ARCHIVE
     -DUSE_YARA
+    -fPIC
     )
 
 include(${CMAKE_CURRENT_LIST_DIR}/../../dep/die_script/die_script.cmake)
