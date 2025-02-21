@@ -19,6 +19,8 @@ if(WIN32)
         set (CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /Zc:wchar_t-")
         set (CMAKE_CXX_FLAGS_MINSIZEREL "${CMAKE_CXX_FLAGS_MINSIZEREL} /Zc:wchar_t-")
     endif()
+else()
+    add_definitions(-fPIC)
 endif()
 
 add_definitions(
@@ -28,8 +30,7 @@ add_definitions(
     -DUSE_PDF
     -DUSE_ARCHIVE
     -DUSE_YARA
-    -fPIC
-    )
+)
 
 include(${CMAKE_CURRENT_LIST_DIR}/../../dep/die_script/die_script.cmake)
 include(GNUInstallDirs)
