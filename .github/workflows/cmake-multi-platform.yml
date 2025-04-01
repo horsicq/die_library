@@ -49,3 +49,17 @@ jobs:
           cmake -DCMAKE_BUILD_TYPE=MinSizeRel -DCMAKE_PREFIX_PATH="${{ github.workspace }}\Qt\5.15.2\msvc2019" -G "NMake Makefiles" ..
           nmake
           cpack -G ZIP
+
+      - name: Upload Release as Download
+        uses: softprops/action-gh-release@v2
+        env:
+          RELEASE_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+        with:
+          tag_name: Beta
+          release_name: Beta
+          draft: false
+          prerelease: true
+          files: |
+            ${{ env.SRC_PATH }}/tmp_build/packages/*.zip
+
+          
