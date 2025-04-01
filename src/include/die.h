@@ -11,6 +11,7 @@
 #define DIE_ALLTYPESSCAN 0x00000004
 #define DIE_RECURSIVESCAN 0x00000008
 #define DIE_VERBOSE 0x00000010
+#define DIE_AGGRESSIVESCAN 0x00000020
 #define DIE_RESULTASXML 0x00010000
 #define DIE_RESULTASJSON 0x00020000
 #define DIE_RESULTASTSV 0x00040000
@@ -34,7 +35,13 @@ void DIE_FreeMemoryA(char *pszString);
 void DIE_FreeMemoryW(wchar_t *pwszString);
 
 #ifdef _WIN32
-int DIE_VB_ScanFile(wchar_t *pwszFileName, unsigned int nFlags, wchar_t *pwszDatabase, wchar_t *pwszBuffer, int nBufferSize);
+int __stdcall DIE_VB_ScanFile(wchar_t *pwszFileName, unsigned int nFlags, wchar_t *pwszDatabase, wchar_t *pwszBuffer, int nBufferSize);
+
+// Define callback function type for progress reporting and scan control
+// Return Value 0 - Abort the scanning process. 1 - Continue the scanning process.
+typedef int (__stdcall *DIE_VB_CALLBACK)(wchar_t *curSigName, int curSigindex, int maxSigs);
+int __stdcall DIE_VB_ScanFileEx(wchar_t *pwszFileName, unsigned int nFlags, wchar_t *pwszDatabase, wchar_t *pwszBuffer, int nBufferSize, DIE_VB_CALLBACK pfnCallback);
+);
 #endif
 
 #ifdef UNICODE

@@ -3,7 +3,7 @@ Imports System.Text
 
 Public Class FormMain
     <DllImport("die.dll", CharSet:=CharSet.Unicode,
-               CallingConvention:=CallingConvention.Cdecl, EntryPoint:="DIE_VB_ScanFile")>
+               CallingConvention:=CallingConvention.stdcall, EntryPoint:="DIE_VB_ScanFile")>
     Shared Function DIE_VB_ScanFile(lpFileName As String, nFlags As Integer, lpDataBase As String, lpBuffer As String, nBufferSize As Integer) As Integer
     End Function
 

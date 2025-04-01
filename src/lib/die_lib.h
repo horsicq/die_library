@@ -34,6 +34,10 @@
 #define LIB_SOURCE_EXPORT Q_DECL_IMPORT
 #endif
 
+#ifdef Q_OS_WIN32
+typedef int (__stdcall *DIE_VB_CALLBACK)(wchar_t* curSigName, int curSigindex, int maxSigs);
+#endif
+
 class DIE_lib {
 public:
     DIE_lib();
@@ -53,6 +57,7 @@ public:
     void freeMemoryW(wchar_t *pwszString);
 #ifdef Q_OS_WIN32
     int VB_ScanFile(wchar_t *pwszFileName, unsigned int nFlags, wchar_t *pwszDatabase, wchar_t *pwszBuffer, int nBufferSize);
+    int VB_ScanFileCallback(wchar_t *pwszFileName, unsigned int nFlags, wchar_t *pwszDatabase, wchar_t *pwszBuffer, int nBufferSize, DIE_VB_CALLBACK pfnCallback);
 #endif
 
 private:

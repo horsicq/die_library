@@ -39,6 +39,16 @@ static void StaticDeletePointer(void *p)
         p = nullptr;
     }
 }
+#ifdef Q_OS_WIN32
+bool _scanEngineCallback(const QString &sCurrentSignature, qint32 nNumberOfSignatures, qint32 nCurrentIndex, void *pUserData)
+{
+    wchar_t *bBuffer = new wchar_t[sCurrentSignature.size() + 1];
+
+    XBinary::_toWCharArray(sCurrentSignature, bBuffer);
+
+    return ((DIE_VB_CALLBACK)pUserData)(bBuffer, nCurrentIndex, nNumberOfSignatures);
+}
+#endif
 
 LIB_SOURCE_EXPORT char *DIE_ScanFileA(char *pszFileName, unsigned int nFlags, char *pszDatabase)
 {
@@ -100,9 +110,15 @@ LIB_SOURCE_EXPORT void DIE_FreeMemoryW(wchar_t *pwszString)
     DIE_lib().freeMemoryW(pwszString);
 }
 #ifdef Q_OS_WIN32
-LIB_SOURCE_EXPORT int DIE_VB_ScanFile(wchar_t *pwszFileName, unsigned int nFlags, wchar_t *pwszDatabase, wchar_t *pwszBuffer, int nBufferSize)
+LIB_SOURCE_EXPORT int __stdcall DIE_VB_ScanFile(wchar_t *pwszFileName, unsigned int nFlags, wchar_t *pwszDatabase, wchar_t *pwszBuffer, int nBufferSize)
 {
     return DIE_lib().VB_ScanFile(pwszFileName, nFlags, pwszDatabase, pwszBuffer, nBufferSize);
+}
+#endif
+#ifdef Q_OS_WIN32
+LIB_SOURCE_EXPORT int __stdcall DIE_VB_ScanFileCallback(wchar_t *pwszFileName, unsigned int nFlags, wchar_t *pwszDatabase, wchar_t *pwszBuffer, int nBufferSize, DIE_VB_CALLBACK pfnCallback)
+{
+    return DIE_lib().VB_ScanFileCallback(pwszFileName, nFlags, pwszDatabase, pwszBuffer, nBufferSize, pfnCallback);
 }
 #endif
 
@@ -272,6 +288,35 @@ int DIE_lib::VB_ScanFile(wchar_t *pwszFileName, unsigned int nFlags, wchar_t *pw
     return nResult;
 }
 #endif
+#ifdef Q_OS_WIN32
+int DIE_lib::VB_ScanFileCallback(wchar_t *pwszFileName, unsigned int nFlags, wchar_t *pwszDatabase, wchar_t *pwszBuffer, int nBufferSize, DIE_VB_CALLBACK pfnCallback)
+{
+    int nResult = 0;
+
+    QString sFileName = XBinary::_fromWCharArray(pwszFileName, -1);
+    QString sDatabase = XBinary::_fromWCharArray(pwszDatabase, -1);
+
+    XScanEngine::SCAN_OPTIONS scanOptions = XScanEngine::getDefaultOptions(nFlags);
+    scanOptions.scanEngineCallback = _scanEngineCallback;
+    scanOptions.pUserData = pfnCallback;
+
+    DiE_Script dieScript;
+
+    dieScript.loadDatabase(sDatabase, DiE_ScriptEngine::DT_MAIN);
+
+    XScanEngine::SCAN_RESULT scanResult = dieScript.scanFile(sFileName, &scanOptions);
+    ScanItemModel model(&scanOptions, &(scanResult.listRecords), 1);
+
+    QString sResult = model.toString();
+
+    if (sResult.size() < nBufferSize) {
+        XBinary::_toWCharArray(sResult, pwszBuffer);
+        nResult = sResult.size();
+    }
+
+    return nResult;
+}
+#endif
 bool DIE_lib::_loadDatabase(QString sDatabase)
 {
     bool bResult = false;
@@ -324,10 +369,6 @@ QString DIE_lib::_scanMemory(char *pMemory, int nMemorySize, quint32 nFlags, QSt
 {
     XScanEngine::SCAN_OPTIONS scanOptions = XScanEngine::getDefaultOptions(nFlags);
     DiE_Script dieScript;
-
-    if (sDatabase == "") {
-        sDatabase = "$app/db";
-    }
 
     dieScript.loadDatabase(sDatabase, DiE_ScriptEngine::DT_MAIN);
 
