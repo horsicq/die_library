@@ -81,7 +81,7 @@ jobs:
           version: '5.15.2'
           host: 'windows'
           target: 'desktop'
-          arch: 'win32_msvc2019_64'
+          arch: 'win64_msvc2019_64'
           dir: ${{ github.workspace }}
           modules: qtscript
 
