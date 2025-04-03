@@ -116,7 +116,8 @@ LIB_SOURCE_EXPORT int __stdcall DIE_VB_ScanFile(wchar_t *pwszFileName, unsigned 
 }
 #endif
 #ifdef Q_OS_WIN32
-LIB_SOURCE_EXPORT int __stdcall DIE_VB_ScanFileCallback(wchar_t *pwszFileName, unsigned int nFlags, wchar_t *pwszDatabase, wchar_t *pwszBuffer, int nBufferSize, DIE_VB_CALLBACK pfnCallback)
+LIB_SOURCE_EXPORT int __stdcall DIE_VB_ScanFileCallback(wchar_t *pwszFileName, unsigned int nFlags, wchar_t *pwszDatabase, wchar_t *pwszBuffer, int nBufferSize,
+                                                        DIE_VB_CALLBACK pfnCallback)
 {
     return DIE_lib().VB_ScanFileCallback(pwszFileName, nFlags, pwszDatabase, pwszBuffer, nBufferSize, pfnCallback);
 }

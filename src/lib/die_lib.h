@@ -35,7 +35,7 @@
 #endif
 
 #ifdef Q_OS_WIN32
-typedef int (__stdcall *DIE_VB_CALLBACK)(wchar_t* curSigName, int curSigindex, int maxSigs);
+typedef int(__stdcall *DIE_VB_CALLBACK)(wchar_t *curSigName, int curSigindex, int maxSigs);
 #endif
 
 class DIE_lib {
