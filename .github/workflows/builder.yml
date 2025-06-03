@@ -16,7 +16,7 @@ env:
 
 jobs:
   build-windows-32:
-    runs-on: windows-latest
+    runs-on: windows-2022
     steps:
       - uses: actions/checkout@v4
         with:
@@ -62,7 +62,7 @@ jobs:
             ${{ env.SRC_PATH }}/tmp_build/packages/*.zip
 
   build-windows-64:
-    runs-on: windows-latest
+    runs-on: windows-2022
     steps:
       - uses: actions/checkout@v4
         with:
