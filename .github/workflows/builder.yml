@@ -26,7 +26,7 @@ jobs:
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v2
         with:
-          msbuild-architecture: x86
+          msbuild-architecture: x64
           vs-version: '[16.0,17.0)'
 
       - name: Install Qt
@@ -68,7 +68,7 @@ jobs:
         with:
          submodules: 'recursive'
          path: ${{ env.SRC_PATH }}
-         
+
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v2
         with:
