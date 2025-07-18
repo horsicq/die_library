@@ -42,7 +42,7 @@ int __stdcall DIE_VB_ScanFile(wchar_t *pwszFileName, unsigned int nFlags, wchar_
 typedef int(__stdcall *DIE_VB_CALLBACK)(wchar_t *curSigName, int curSigindex, int maxSigs);
 int __stdcall DIE_VB_ScanFileCallback(wchar_t *pwszFileName, unsigned int nFlags, wchar_t *pwszDatabase, wchar_t *pwszBuffer, int nBufferSize,
                                       DIE_VB_CALLBACK pfnCallback);
-);
+
 #endif
 
 #ifdef UNICODE
