@@ -25,7 +25,7 @@ Before building the DiE library, ensure you have the following dependencies inst
 
 1. **Clone the repository**:
 
-git clone --recursive https://github.com/horsicq/die_library.git
+git clone --recursive https://github.com/horsicq/die_library.git &&
 cd die_library
 
 ## Building the Project
