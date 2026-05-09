@@ -337,7 +337,8 @@ QString DIE_lib::_scanFileEx(QString sFileName, quint32 nFlags)
 {
     XScanEngine::SCAN_OPTIONS scanOptions = XScanEngine::getDefaultOptions(nFlags);
 
-    DiE_Script dieScript = *g_pDieScript;
+    DiE_Script dieScript;
+    dieScript.copySignaturesFrom(*g_pDieScript);
 
     XScanEngine::SCAN_RESULT scanResult = dieScript.scanFile(sFileName, &scanOptions);
     ScanItemModel model(&scanOptions, &(scanResult.listRecords), 1, nullptr);
@@ -349,7 +350,8 @@ QString DIE_lib::_scanMemoryEx(char *pMemory, int nMemorySize, quint32 nFlags)
 {
     XScanEngine::SCAN_OPTIONS scanOptions = XScanEngine::getDefaultOptions(nFlags);
 
-    DiE_Script dieScript = *g_pDieScript;
+    DiE_Script dieScript;
+    dieScript.copySignaturesFrom(*g_pDieScript);
 
     XScanEngine::SCAN_RESULT scanResult = dieScript.scanMemory(pMemory, nMemorySize, &scanOptions);
     ScanItemModel model(&scanOptions, &(scanResult.listRecords), 1, nullptr);
