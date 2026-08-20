@@ -15,6 +15,7 @@ cmake_minimum_required(VERSION 3.10)
 file(STRINGS ${CMAKE_CURRENT_LIST_DIR}/../release_version.txt X_PROJECT_VERSION)
 
 project(die_lib VERSION ${X_PROJECT_VERSION} LANGUAGES CXX)
+option(USE_DIE "Enable Detect It Easy integration" ON)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core)
 #find_package(Qt4 4.8.6 REQUIRED QtCore QtScript)
