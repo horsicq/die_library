@@ -26,7 +26,6 @@ endif()
 add_definitions(
     -DQT_DEPRECATED_WARNINGS
     -DLIB_SOURCE_LIBRARY
-    -DUSE_ARCHIVE
     -DUSE_YARA
     -DUSE_XIMD
 )
