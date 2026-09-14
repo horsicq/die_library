@@ -53,10 +53,6 @@ endif()
 
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
-target_link_libraries(die PRIVATE bzip2)
-target_link_libraries(die PRIVATE lzma)
-target_link_libraries(die PRIVATE zlib)
-target_link_libraries(die PRIVATE ppmd)
 target_link_libraries(die PRIVATE capstone_x86)
 target_link_libraries(die PRIVATE xsimd)
 
